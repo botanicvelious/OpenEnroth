@@ -26,6 +26,16 @@ jobs:
         configuration: [Debug, Release]
         architecture: [x86, x64]
     steps:
+    - name: Checking input
+      run: |
+        echo "github.event.pull_request.merged           : $MERGED_RAW"
+        echo "github.event.pull_request.merged == 'true' : $MERGED_TRUE_STR"
+        echo "github.event.pull_request.merged  == true  : $MERGED_TRUE_BOOL"
+      env:
+        MERGED_RAW: ${{ github.event.pull_request.merged }}
+        MERGED_TRUE_STR: ${{ github.event.pull_request.merged == 'true' }}
+        MERGED_TRUE_BOOL: ${{ github.event.pull_request.merged == true }}  
+          
     - name: Checkout
       uses: actions/checkout@v3
       with:
