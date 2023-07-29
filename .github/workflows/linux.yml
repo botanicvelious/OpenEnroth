@@ -26,11 +26,6 @@ jobs:
         configuration: [Debug, Release]
         architecture: [x86, x64]
     steps:
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT" 
-          
     - name: Checkout
       uses: actions/checkout@v3
       with:
@@ -78,13 +73,13 @@ jobs:
         sudo apt-get install -y mesa-utils xvfb x11-utils
 
     - name: ccache save cache on merge
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/master'
       uses: hendrikmuhs/ccache-action@v1.2
       with:
         key: linux-${{ matrix.configuration }}-${{ matrix.architecture }}
 
     - name: ccache dont save cache
-      if: github.event.pull_request.merged != true
+      if: github.ref != 'refs/heads/master'
       uses: hendrikmuhs/ccache-action@v1.2
       with:
         key: linux-${{ matrix.configuration }}-${{ matrix.architecture }}
