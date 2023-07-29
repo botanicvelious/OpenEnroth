@@ -32,7 +32,7 @@ jobs:
         echo "github.event.pull_request.merged == 'true' : $MERGED_TRUE_STR"
         echo "github.event.pull_request.merged  == true  : $MERGED_TRUE_BOOL"
       env:
-        MERGED_RAW: ${{ github.event.pull_request.merged }}
+        MERGED_RAW: ${{ github.event }}
         MERGED_TRUE_STR: ${{ github.event.pull_request.merged == 'true' }}
         MERGED_TRUE_BOOL: ${{ github.event.pull_request.merged == true }}  
           
@@ -83,7 +83,7 @@ jobs:
         sudo apt-get install -y mesa-utils xvfb x11-utils
 
     - name: ccache save cache on merge
-      if: github.event.pull_request.merged
+      if: github.ref == 'refs/heads/main'
       uses: hendrikmuhs/ccache-action@v1.2
       with:
         key: linux-${{ matrix.configuration }}-${{ matrix.architecture }}
