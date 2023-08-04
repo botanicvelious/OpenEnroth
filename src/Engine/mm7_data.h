@@ -115,9 +115,6 @@ extern int Start_Party_Teleport_Flag;
 
 extern int dword_5B65C4_cancelEventProcessing;
 extern int npcIdToDismissAfterDialogue;
-extern std::string game_ui_status_bar_event_string;
-extern std::string game_ui_status_bar_string;
-extern unsigned int game_ui_status_bar_event_string_expiration_time; // In terms of Platform::tickCount.
 extern int _5C35C0_force_party_death;
 extern int bDialogueUI_InitializeActor_NPC_ID;
 
@@ -176,9 +173,6 @@ extern std::array<unsigned short, 128 * 128 * 2> pTerrainNormalIndices;
 extern std::array<unsigned int, 128 * 128 * 2> pTerrainSomeOtherData;
 extern unsigned int uPlayerCreationUI_SelectedCharacter;
 extern int currentAddressingAwardBit;
-extern int guild_membership_approved;
-extern CharacterSkillMastery dword_F8B1B0_MasteryBeingTaught;
-extern int gold_transaction_amount;  // F8B1B4
 extern std::string current_npc_text;  // F8B1E8
 extern char dialogue_show_profession_details;
 

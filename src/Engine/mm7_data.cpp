@@ -2447,11 +2447,6 @@ int dword_5B65C4_cancelEventProcessing;
 int npcIdToDismissAfterDialogue;
 // std::array<char, 777> byte_5C3427;
 
-// TODO(pskelton): GameStatusBar class
-std::string game_ui_status_bar_event_string;
-std::string game_ui_status_bar_string;
-unsigned int game_ui_status_bar_event_string_expiration_time;
-
 int _5C35C0_force_party_death = false;
 int bDialogueUI_InitializeActor_NPC_ID;
 
@@ -2488,9 +2483,6 @@ std::array<unsigned int, 128 * 128 * 2> pTerrainSomeOtherData;
 unsigned int uPlayerCreationUI_SelectedCharacter;
 int currentAddressingAwardBit;
 // int dword_F8B144; // nexindex [-1] to the following
-int guild_membership_approved;
-CharacterSkillMastery dword_F8B1B0_MasteryBeingTaught;
-int gold_transaction_amount;  // F8B1B4
 std::string current_npc_text;                        // F8B1E8
 char dialogue_show_profession_details = false;  // F8B1EC
 
