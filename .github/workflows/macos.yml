@@ -57,6 +57,10 @@ jobs:
           ref: '${{inputs.myCommit}}'
 
       - name: Setup Codesign
+        env: 
+            super_secret1: ${{ secrets.MACOS_CERTIFICATE }}
+            super_secret2: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+        if: ${{ env.super_secret1 == '' }} && ${{ env.super_secret2 == '' }}
         uses: apple-actions/import-codesign-certs@v2
         with: 
           p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
@@ -93,8 +97,7 @@ jobs:
           if [ "${{matrix.architecture}}" = "arm64" ]; then
             export MACOSX_DEPLOYMENT_TARGET="11"
           fi
-          # add -DTEAM_ID= from OSX developer account when aviable
-          cmake -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${{matrix.configuration}} -DCMAKE_OSX_ARCHITECTURES=${{matrix.architecture}}
+          cmake -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${{matrix.configuration}} -DCMAKE_OSX_ARCHITECTURES=${{matrix.architecture}} -DTEAM_ID=${{ secrets.TEAM_ID }}
                   
       - name: Build
         working-directory: build
