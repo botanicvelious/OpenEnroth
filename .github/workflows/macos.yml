@@ -93,6 +93,7 @@ jobs:
           if [ "${{matrix.architecture}}" = "arm64" ]; then
             export MACOSX_DEPLOYMENT_TARGET="11"
           fi
+          # add -DTEAM_ID= from OSX developer account when aviable
           cmake -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${{matrix.configuration}} -DCMAKE_OSX_ARCHITECTURES=${{matrix.architecture}}
                   
       - name: Build
