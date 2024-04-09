@@ -181,7 +181,12 @@ jobs:
           ccache -c
 
       - name: Clean up keychain and provisioning profile
-        if: ${{ always() }}
+        if: ${{ (env.BUILD_CERTIFICATE_BASE64 == 'true') && (env.P12_PASSWORD == 'true') && (env.BUILD_PROVISION_PROFILE_BASE64 == 'true') && (env.KEYCHAIN_PASSWORD == 'true') }}
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}        
         run: |
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision          
