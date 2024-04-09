@@ -19,7 +19,7 @@ else()
     elseif(APPLE)
         # OSX Code Signing
         set(TEAM_ID "" CACHE STRING "The development team ID for code signing")
-        if(TEAM_ID NOT STREQUAL "")
+        IF(NOT ${TEAM_ID} STREQUAL "")
             message(STATUS "TEAM_ID is set so sign OSX")
             set(CMAKE_MACOSX_BUNDLE YES) # after this line, paste this:
 
