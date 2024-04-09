@@ -56,6 +56,12 @@ jobs:
           submodules: recursive
           ref: '${{inputs.myCommit}}'
 
+      - name: Setup Codesign
+        uses: apple-actions/import-codesign-certs@v2
+        with: 
+          p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
+          p12-password: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+
       - name: Restore data cache
         id: restore-data-cache
         uses: actions/cache/restore@v3
