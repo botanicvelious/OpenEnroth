@@ -60,7 +60,7 @@ jobs:
         env: 
             super_secret1: ${{ secrets.MACOS_CERTIFICATE }}
             super_secret2: ${{ secrets.MACOS_CERTIFICATE_PWD }}
-        if: ${{ env.super_secret1 == '' }} && ${{ env.super_secret2 == '' }}
+        if: ${{ env.super_secret1 == '' }} or ${{ env.super_secret2 == '' }}
         uses: apple-actions/import-codesign-certs@v2
         with: 
           p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
