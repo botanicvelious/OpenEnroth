@@ -17,6 +17,18 @@ else()
     if (WIN32)
         add_executable(OpenEnroth ${BIN_OPENENROTH_HEADERS} ${BIN_OPENENROTH_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/win_OpenEnroth.rc)
     elseif(APPLE)
+        # OSX Code Signing
+        set(TEAM_ID "" CACHE STRING "The development team ID for code signing")
+        if(TEAM_ID NOT STREQUAL "")
+            message(STATUS "TEAM_ID is set so sign OSX")
+            set(CMAKE_MACOSX_BUNDLE YES) # after this line, paste this:
+
+            set(XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual")
+            set(XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ${TEAM_ID})
+            set(XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Developer ID Application")
+            set(XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED TRUE)
+	endif()
+    
         # Set apple plist items and icon
         set(MACOSX_BUNDLE_BUNDLE_NAME "OpenEnroth")
         set(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}")
@@ -29,6 +41,15 @@ else()
         set(OpenEnroth_ICON ${CMAKE_CURRENT_SOURCE_DIR}/osx_OpenEnroth.icns)
         set_source_files_properties(${OpenEnroth_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
         add_executable(OpenEnroth MACOSX_BUNDLE ${OpenEnroth_ICON} ${BIN_OPENENROTH_HEADERS} ${BIN_OPENENROTH_SOURCES})
+
+        if(TEAM_ID NOT STREQUAL "")
+            set_target_properties(OpenEnroth PROPERTIES
+                XCODE_ATTRIBUTE_CODE_SIGN_STYLE ${XCODE_ATTRIBUTE_CODE_SIGN_STYLE}
+                XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ${XCODE_ATTRIBUTE_DEVELOPMENT_TEAM}
+                XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ${XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY}
+                XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED ${XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED}
+            ) 
+	endif()
     else ()
         add_executable(OpenEnroth ${BIN_OPENENROTH_HEADERS} ${BIN_OPENENROTH_SOURCES})
     endif()
