@@ -56,7 +56,8 @@ int platformMain(int argc, char **argv) {
         // Prints the exception info and stack trace, conditionally enabling color codes depending on
         // whether stderr is a terminal
         std::cerr << "Error: " << e.message() << '\n';
-        e.trace().print(std::cerr, cpptrace::isatty(cpptrace::stderr_fileno));        
+        e.trace().print(std::cerr, cpptrace::isatty(cpptrace::stderr_fileno));     
+        return 1;
     } catch (const std::exception &e) {
         // TODO(captainurist): we need a separate test that testing framework terminates correctly if the engine throws.
         fmt::print(stderr, "{}\n", e.what());
