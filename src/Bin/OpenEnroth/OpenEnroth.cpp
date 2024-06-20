@@ -134,6 +134,9 @@ int runOpenEnroth(const OpenEnrothOptions &options) {
 
 int openEnrothMain(int argc, char **argv) {
     try {
+        double a = 123, b = 0;
+        double result = a/b;
+        
         StackTraceOnCrash st;
         UnicodeCrt _(argc, argv);
         OpenEnrothOptions options = OpenEnrothOptions::parse(argc, argv);
