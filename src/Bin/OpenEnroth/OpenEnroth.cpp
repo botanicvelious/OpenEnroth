@@ -29,6 +29,7 @@
 #include "OpenEnrothOptions.h"
 
 #ifndef __ANDROID__
+#   include <iostream>
 #   include <cpptrace/cpptrace.hpp>
 #endif
 
