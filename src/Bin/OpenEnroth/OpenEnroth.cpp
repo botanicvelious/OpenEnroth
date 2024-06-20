@@ -28,6 +28,10 @@
 
 #include "OpenEnrothOptions.h"
 
+#ifndef __ANDROID__
+#   include <cpptrace/cpptrace.hpp>
+#endif
+
 static std::string readTextFile(std::string_view path) {
     // Normalize to UNIX line endings. Need this b/c git on Windows checks out CRLF line endings.
     std::string result = replaceAll(FileInputStream(path).readAll(), "\r\n", "\n");
@@ -148,6 +152,16 @@ int openEnrothMain(int argc, char **argv) {
 }
 
 int platformMain(int argc, char **argv) {
+    try {
+        double a = 123, b = 0;
+        double result = a/b;
+    } catch(cpptrace::exception& e) {
+        // Prints the exception info and stack trace, conditionally enabling color codes depending on
+        // whether stderr is a terminal
+        std::cerr << "Error: " << e.message() << '\n';
+        e.trace().print(std::cerr, cpptrace::isatty(cpptrace::stderr_fileno));     
+    }
+    
     int result = openEnrothMain(argc, argv);
 
 #ifdef _WINDOWS
