@@ -84,6 +84,7 @@ jobs:
             sudo dpkg --add-architecture i386
           fi
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+          sed -i 's/azure\.//' /etc/apt/sources.list
           sudo apt-get update -y
           if [ "${{matrix.architecture}}" = "x86" ]; then
             sudo apt-get install -y gcc-13-multilib 
