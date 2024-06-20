@@ -83,6 +83,7 @@ jobs:
         with:
           packages: gcc-13 g++-13 lld libglu1-mesa-dev libsdl2-dev libdwarf-dev libelf-dev
           version: 1.0
+          execute_install_scripts: true
 
       - name: Install dependencies x86
         if: matrix.architecture == 'x86'
