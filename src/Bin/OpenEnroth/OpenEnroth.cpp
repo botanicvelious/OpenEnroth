@@ -134,9 +134,7 @@ int runOpenEnroth(const OpenEnrothOptions &options) {
 
 int openEnrothMain(int argc, char **argv) {
     try {
-        double a = 123, b = 0;
-        double result = a/b;
-        int ptr= nullptr;ptr = 5;
+        return 1 / 0;
         
         StackTraceOnCrash st;
         UnicodeCrt _(argc, argv);
