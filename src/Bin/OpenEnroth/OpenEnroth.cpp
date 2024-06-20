@@ -145,23 +145,18 @@ int openEnrothMain(int argc, char **argv) {
         case OpenEnrothOptions::SUBCOMMAND_PLAY: return runPlay(options);
         case OpenEnrothOptions::SUBCOMMAND_RETRACE: return runRetrace(options);
         }
-    } catch (const std::exception &e) {
-        fmt::print(stderr, "{}\n", e.what());
-        return 1;
-    }
-}
-
-int platformMain(int argc, char **argv) {
-    try {
-        double a = 123, b = 0;
-        double result = a/b;
     } catch(cpptrace::exception& e) {
         // Prints the exception info and stack trace, conditionally enabling color codes depending on
         // whether stderr is a terminal
         std::cerr << "Error: " << e.message() << '\n';
         e.trace().print(std::cerr, cpptrace::isatty(cpptrace::stderr_fileno));     
+    } catch (const std::exception &e) {
+        fmt::print(stderr, "{}\n", e.what());
+        return 1;
     }
+}
     
+int platformMain(int argc, char **argv) {
     int result = openEnrothMain(argc, argv);
 
 #ifdef _WINDOWS
@@ -179,3 +174,4 @@ int platformMain(int argc, char **argv) {
 
     return result;
 }
+
