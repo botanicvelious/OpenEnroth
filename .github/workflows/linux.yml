@@ -53,9 +53,9 @@ jobs:
       - name: Configure fast APT mirror
         uses: vegardit/fast-apt-mirror.sh@v1
         with: # the following parameters are listed with their action default values and are optional
-          healthchecks:  20 # Number of mirrors from the mirrors list to check for availability and up-to-dateness
-          speedtests:    10 # Maximum number of healthy mirrors to test for speed
-          parallel:       3 # Number of parallel speed tests
+          healthchecks:  2 # Number of mirrors from the mirrors list to check for availability and up-to-dateness
+          speedtests:    2 # Maximum number of healthy mirrors to test for speed
+          parallel:       2 # Number of parallel speed tests
           sample-size: 1024 # Number of kilobytes to download during the speed from each mirror
           sample-time:    3 # Maximum number of seconds within the sample download from a mirror must finish
 
@@ -78,35 +78,25 @@ jobs:
         run: |
           cp -r ./resources/shaders ./OpenEnroth_GameData/mm7
 
-
-      - name: Install dependencies x86
-        if: matrix.architecture == 'x86' 
+      - name: Install dependencies
         run: |
-          sudo dpkg --add-architecture i386
+          if [ "${{matrix.architecture}}" = "x86" ]; then
+            sudo dpkg --add-architecture i386
+          fi
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-          sed -i 's/azure\.//' /etc/apt/sources.list
-          sudo apt-get update -y
-          sudo apt-get install -y gcc-13-multilib 
-          sudo apt-get install -y g++-13-multilib 
-          sudo apt-get install -y lld 
-          sudo apt-get install -y libglu1-mesa-dev:i386 
-          sudo apt-get install -y libsdl2-dev:i386 
-          sudo apt-get install -y libdwarf-dev:i386 
-          sudo apt-get install -y libelf-dev:i386
-
-      - name: Install dependencies x86
-        if: matrix.architecture == 'x86_64' 
-        run: |
-          sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-          sed -i 's/azure\.//' /etc/apt/sources.list
-          sudo apt-get update -y
-          sudo apt-get install -y gcc-13 
-          sudo apt-get install -y g++-13 
-          sudo apt-get install -y lld 
-          sudo apt-get install -y libglu1-mesa-dev 
-          sudo apt-get install -y libsdl2-dev 
-          sudo apt-get install -y libdwarf-dev 
-          sudo apt-get install -y libelf-dev
+          sudo apt-get update
+          if [ "${{matrix.architecture}}" = "x86" ]; then
+            sudo apt-get install -y gcc-13-multilib g++-13-multilib lld
+            sudo apt-get install -y libglu1-mesa-dev:i386
+            sudo apt-get install -y libsdl2-dev:i386
+            sudo apt-get install -y libdwarf-dev:i386 libelf-dev:i386
+          fi
+          if [ "${{matrix.architecture}}" = "x86_64" ]; then
+            sudo apt-get install -y gcc-13 g++-13 lld
+            sudo apt-get install -y libglu1-mesa-dev
+            sudo apt-get install -y libsdl2-dev
+            sudo apt-get install -y libdwarf-dev libelf-dev
+          fi
 
       - name: Run ccache
         uses: hendrikmuhs/ccache-action@v1.2.10
