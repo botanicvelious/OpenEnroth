@@ -78,32 +78,35 @@ jobs:
         run: |
           cp -r ./resources/shaders ./OpenEnroth_GameData/mm7
 
-      - name: Install dependencies
+
+      - name: Install dependencies x86
+        if: matrix.architecture == 'x86' 
         run: |
-          if [ "${{matrix.architecture}}" = "x86" ]; then
-            sudo dpkg --add-architecture i386
-          fi
+          sudo dpkg --add-architecture i386
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
           sed -i 's/azure\.//' /etc/apt/sources.list
           sudo apt-get update -y
-          if [ "${{matrix.architecture}}" = "x86" ]; then
-            sudo apt-get install -y gcc-13-multilib 
-            sudo apt-get install -y g++-13-multilib 
-            sudo apt-get install -y lld 
-            sudo apt-get install -y libglu1-mesa-dev:i386 
-            sudo apt-get install -y libsdl2-dev:i386 
-            sudo apt-get install -y libdwarf-dev:i386 
-            sudo apt-get install -y libelf-dev:i386
-          fi
-          if [ "${{matrix.architecture}}" = "x86_64" ]; then
-            sudo apt-get install -y gcc-13 
-            sudo apt-get install -y g++-13 
-            sudo apt-get install -y lld 
-            sudo apt-get install -y libglu1-mesa-dev 
-            sudo apt-get install -y libsdl2-dev 
-            sudo apt-get install -y libdwarf-dev 
-            sudo apt-get install -y libelf-dev
-          fi
+          sudo apt-get install -y gcc-13-multilib 
+          sudo apt-get install -y g++-13-multilib 
+          sudo apt-get install -y lld 
+          sudo apt-get install -y libglu1-mesa-dev:i386 
+          sudo apt-get install -y libsdl2-dev:i386 
+          sudo apt-get install -y libdwarf-dev:i386 
+          sudo apt-get install -y libelf-dev:i386
+
+      - name: Install dependencies x86
+        if: matrix.architecture == 'x86_64' 
+        run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+          sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo apt-get update -y
+          sudo apt-get install -y gcc-13 
+          sudo apt-get install -y g++-13 
+          sudo apt-get install -y lld 
+          sudo apt-get install -y libglu1-mesa-dev 
+          sudo apt-get install -y libsdl2-dev 
+          sudo apt-get install -y libdwarf-dev 
+          sudo apt-get install -y libelf-dev
 
       - name: Run ccache
         uses: hendrikmuhs/ccache-action@v1.2.10
