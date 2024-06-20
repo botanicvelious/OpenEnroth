@@ -134,7 +134,7 @@ int runOpenEnroth(const OpenEnrothOptions &options) {
 
 int openEnrothMain(int argc, char **argv) {
     try {
-        return 1 / 0;
+        *( ( char* ) NULL ) = 0;
         
         StackTraceOnCrash st;
         UnicodeCrt _(argc, argv);
