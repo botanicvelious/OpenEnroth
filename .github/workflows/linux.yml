@@ -78,25 +78,19 @@ jobs:
         run: |
           cp -r ./resources/shaders ./OpenEnroth_GameData/mm7
 
-      - name: Install dependencies
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        if: matrix.architecture == "x86_64"
+        with:
+          packages: gcc-13 g++-13 lld libglu1-mesa-dev libsdl2-dev libdwarf-dev libelf-dev
+          version: 1.0
+
+      - name: Install dependencies x86
+        if: matrix.architecture == "x86"
         run: |
-          if [ "${{matrix.architecture}}" = "x86" ]; then
-            sudo dpkg --add-architecture i386
-          fi
+          sudo dpkg --add-architecture i386
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
           sudo apt-get update
-          if [ "${{matrix.architecture}}" = "x86" ]; then
-            sudo apt-get install -y gcc-13-multilib g++-13-multilib lld
-            sudo apt-get install -y libglu1-mesa-dev:i386
-            sudo apt-get install -y libsdl2-dev:i386
-            sudo apt-get install -y libdwarf-dev:i386 libelf-dev:i386
-          fi
-          if [ "${{matrix.architecture}}" = "x86_64" ]; then
-            sudo apt-get install -y gcc-13 g++-13 lld
-            sudo apt-get install -y libglu1-mesa-dev
-            sudo apt-get install -y libsdl2-dev
-            sudo apt-get install -y libdwarf-dev libelf-dev
-          fi
+          sudo apt-get install -y gcc-13-multilib g++-13-multilib lld libglu1-mesa-dev:i386 libsdl2-dev:i386 libdwarf-dev:i386 libelf-dev:i386
 
       - name: Run ccache
         uses: hendrikmuhs/ccache-action@v1.2.10
