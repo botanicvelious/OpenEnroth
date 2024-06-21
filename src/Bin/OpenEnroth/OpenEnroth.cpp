@@ -158,7 +158,11 @@ int openEnrothMain(int argc, char **argv) {
         std::cerr << "Error: " << e.message() << '\n';
         e.trace().print(std::cerr, cpptrace::isatty(cpptrace::stderr_fileno));
         return 1;
-    } 
+    } catch (const std::exception &e) {
+        e.trace().print(std::cerr, cpptrace::isatty(cpptrace::stderr_fileno));
+        fmt::print(stderr, "{} Test\n", e.what());
+        return 1;
+    }
 }
     
 int platformMain(int argc, char **argv) {
