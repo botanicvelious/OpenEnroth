@@ -134,7 +134,10 @@ int runOpenEnroth(const OpenEnrothOptions &options) {
 
 int openEnrothMain(int argc, char **argv) {
     try {
-        *( ( char* ) NULL ) = 0;
+        vector<int> vec;
+        vec.push_back(0);
+        vec.push_back(1);        
+        vec.at(2);
         
         StackTraceOnCrash st;
         UnicodeCrt _(argc, argv);
