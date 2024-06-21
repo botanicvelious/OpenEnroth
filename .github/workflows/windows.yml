@@ -134,14 +134,14 @@ jobs:
           ninja -v
 
       - name: Run unit tests
-        if: matrix.configuration == 'true'
+        if: matrix.configuration == 'zys'
         working-directory: build
         run: |
           ninja UnitTest
 
       # Only run gametest if we restored game data.
       - name: Run game tests
-        if: steps.restore-data-cache.outputs.cache-hit == 'true'
+        if: steps.restore-data-cache.outputs.cache-hit == 'zys'
         working-directory: build
         run: |
           ninja GameTest_Headless
@@ -149,7 +149,7 @@ jobs:
           OPENENROTH_MM7_PATH: 'D:\a\OpenEnroth\OpenEnroth\OpenEnroth_GameData\mm7'
 
       - name: Run retrace tests
-        if: steps.restore-data-cache.outputs.cache-hit == 'true' && matrix.configuration == 'Release'
+        if: steps.restore-data-cache.outputs.cache-hit == 'zys' && matrix.configuration == 'Release'
         working-directory: build
         run: |
           ninja RetraceTest_Headless
