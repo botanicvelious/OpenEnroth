@@ -136,7 +136,8 @@ int openEnrothMain(int argc, char **argv) {
     try {
         std::vector<int> vec;
         vec.push_back(0);
-        vec.push_back(1);        
+        vec.push_back(1);     
+        #pragma warning(suppress : 4834)
         vec.at(2);
         
         StackTraceOnCrash st;
