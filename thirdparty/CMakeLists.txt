@@ -57,6 +57,7 @@ endif()
 
 # include cpptrace for debug backtraces
 if(NOT OE_BUILD_PLATFORM STREQUAL "android")
+    set(CPPTRACE_BUILD_SHARED Off)
     include(FetchContent)
     FetchContent_Declare(
       cpptrace
