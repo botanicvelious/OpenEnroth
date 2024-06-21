@@ -159,7 +159,7 @@ int openEnrothMain(int argc, char **argv) {
         e.trace().print(std::cerr, cpptrace::isatty(cpptrace::stderr_fileno));
         return 1;
     } catch (const std::exception &e) {
-        cpptrace::generate_trace().print();
+        cpptrace::generate_trace().print_with_snippets();
         fmt::print(stderr, "{} Test\n", e.what());
         return 1;
     }
