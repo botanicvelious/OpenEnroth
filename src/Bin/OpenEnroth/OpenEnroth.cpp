@@ -134,7 +134,7 @@ int runOpenEnroth(const OpenEnrothOptions &options) {
 
 int openEnrothMain(int argc, char **argv) {
     try {
-        vector<int> vec;
+        std::vector<int> vec;
         vec.push_back(0);
         vec.push_back(1);        
         vec.at(2);
