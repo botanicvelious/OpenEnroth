@@ -22,35 +22,48 @@ bool OpenALAudioDataSource::Open() {
 
     bool result = true;
     ALsizei al_sample_rate = GetSampleRate();
-    ALenum al_format = AL_FORMAT_STEREO_FLOAT32;
     unsigned int num_channels = GetChannelCount();
 
-    switch (num_channels) {
-        case 1:
-            al_format = AL_FORMAT_MONO_FLOAT32;
-            break;
-        case 2:
-            al_format = AL_FORMAT_STEREO_FLOAT32;
-            break;
-        default:
-            if (alIsExtensionPresent("AL_EXT_MCFORMATS")) {
-                switch (num_channels) {
-                    case 4:
-                        al_format = alGetEnumValue("AL_FORMAT_QUAD16");
-                        break;
-                    case 6:
-                        al_format = alGetEnumValue("AL_FORMAT_51CHN16");
-                        break;
-                    case 7:
-                        al_format = alGetEnumValue("AL_FORMAT_61CHN16");
-                        break;
-                    case 8:
-                        al_format = alGetEnumValue("AL_FORMAT_71CHN16");
-                        break;
-                }
-            }
-            logger->error("Unsupported number of audio channels: {}", num_channels);
-    }
+	if (alIsExtensionPresent("AL_EXT_MCFORMATS")) {
+		logger->info("AL_EXT_MCFORMATS exists");
+		ALenum al_format = AL_FORMAT_STEREO_FLOAT32;
+		switch (num_channels) {
+			case 1:
+				al_format = alGetEnumValue("AL_FORMAT_MONO_FLOAT32");
+				break;
+			case 2:
+				al_format = alGetEnumValue("AL_FORMAT_STEREO_FLOAT32");
+				break;
+			default:
+				switch (num_channels) {
+					case 4:
+						al_format = alGetEnumValue("AL_FORMAT_QUAD16");
+						break;
+					case 6:
+						al_format = alGetEnumValue("AL_FORMAT_51CHN16");
+						break;
+					case 7:
+						al_format = alGetEnumValue("AL_FORMAT_61CHN16");
+						break;
+					case 8:
+						al_format = alGetEnumValue("AL_FORMAT_71CHN16");
+						break;
+					}
+				logger->error("Unsupported number of audio channels: {}", num_channels);
+		}
+	} else {
+		ALenum al_format = AL_FORMAT_STEREO16;
+		switch (num_channels) {
+			case 1:
+				al_format = AL_FORMAT_MONO16;
+				break;
+			case 2:
+				al_format = AL_FORMAT_STEREO16;
+				break;
+			default:
+				logger->error("Unsupported number of audio channels: {}", num_channels);
+		}
+	}
 
     while (true) {
         Blob buffer = _baseDataSource->GetNextBuffer();
