@@ -22,15 +22,15 @@ bool OpenALAudioDataSource::Open() {
 
     bool result = true;
     ALsizei al_sample_rate = GetSampleRate();
-    ALenum al_format = AL_FORMAT_STEREO16;
+    ALenum al_format = AL_FORMAT_STEREO_FLOAT32;
     unsigned int num_channels = GetChannelCount();
 
     switch (num_channels) {
         case 1:
-            al_format = AL_FORMAT_MONO16;
+            al_format = AL_FORMAT_MONO_FLOAT32;
             break;
         case 2:
-            al_format = AL_FORMAT_STEREO16;
+            al_format = AL_FORMAT_STEREO_FLOAT32;
             break;
         default:
             if (alIsExtensionPresent("AL_EXT_MCFORMATS")) {
