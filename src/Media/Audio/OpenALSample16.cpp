@@ -25,9 +25,9 @@ void AudioSample16::Close() {
 void AudioSample16::defaultSource() {
     assert((al_source != -1) && "Cannot default invalid source!");
     setSourceDefaults(al_source);
-    alSourcef(al_source, AL_REFERENCE_DISTANCE, REFERENCE_DIST);
-    alSourcef(al_source, AL_MAX_DISTANCE, MAX_SOUND_DIST);
-    alSourcef(al_source, AL_ROLLOFF_FACTOR, ROLLOFF_FACTOR);
+    //alSourcef(al_source, AL_REFERENCE_DISTANCE, REFERENCE_DIST);
+    //alSourcef(al_source, AL_MAX_DISTANCE, MAX_SOUND_DIST);
+    //alSourcef(al_source, AL_ROLLOFF_FACTOR, ROLLOFF_FACTOR);
 }
 
 bool AudioSample16::Open(PAudioDataSource data_source) {
