@@ -124,6 +124,7 @@ if(OE_BUILD_COMPILER STREQUAL "gcc" OR OE_BUILD_COMPILER STREQUAL "clang")
         message(FATAL_ERROR "The gold linker not supported at this time and is known to have problems. Please use lld or mold.")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=gold")
     else()
+        message(WARNING "Supported linkers are lld and mold, other linkers may cause issues.")
         message(STATUS "Fallback to default linker.")
     endif()
 
