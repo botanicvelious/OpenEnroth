@@ -40,7 +40,7 @@ set(OE_USE_CCACHE ON CACHE BOOL "Use ccache if available.")
 set(OE_USE_SCCACHE ON CACHE BOOL "Use sccache if available, note that ccache takes precedence.")
 set(OE_USE_LD_MOLD ON CACHE BOOL "Use mold linker if available.")
 set(OE_USE_LD_LLD ON CACHE BOOL "Use lld linker if available, note that mold takes precedence.")
-set(OE_USE_LD_GOLD ON CACHE BOOL "Use GNU gold linker if available, note that lld takes precedence.")
+set(OE_USE_LD_GOLD ON CACHE BOOL "Use GNU gold linker if available, note that mold and lld takes precedence.")
 
 if(OE_USE_PREBUILT_DEPENDENCIES AND OE_USE_DUMMY_DEPENDENCIES)
     message(FATAL_ERROR "Only one of OE_USE_PREBUILT_DEPENDENCIES and OE_USE_DUMMY_DEPENDENCIES must be set.")
@@ -72,7 +72,7 @@ endif()
 # Detect available linkers.
 check_linker_flag(CXX "-fuse-ld=mold" COMPILER_RT_HAS_FUSE_LD_MOLD_FLAG)
 check_linker_flag(CXX "-fuse-ld=lld" COMPILER_RT_HAS_FUSE_LD_LLD_FLAG)
-check_linker_flag(CXX "-fuse-ld=gold" COMPILER_RT_HAS_FUSE_LD_GOLD_FLAG)
+# check_linker_flag(CXX "-fuse-ld=gold" COMPILER_RT_HAS_FUSE_LD_GOLD_FLAG)
 
 # Set up warnings-as-errors for all compilers.
 if (OE_BUILD_COMPILER STREQUAL "gcc" OR OE_BUILD_COMPILER STREQUAL "clang")
@@ -121,8 +121,10 @@ if(OE_BUILD_COMPILER STREQUAL "gcc" OR OE_BUILD_COMPILER STREQUAL "clang")
         endif ()
     elseif(OE_USE_LD_GOLD AND COMPILER_RT_HAS_FUSE_LD_GOLD_FLAG)
         message(STATUS "Using gold linker.")
+        message(FATAL_ERROR "The gold linker not supported at this time and is known to have problems. Please use lld or mold.")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=gold")
     else()
+        message(WARNING "Supported linkers are lld and mold, other linkers may cause issues.")
         message(STATUS "Fallback to default linker.")
     endif()
 
