@@ -79,11 +79,12 @@ jobs:
           attempt_limit: 3
           attempt_delay: 5000
           command: |
+            sudo apt-get install -y gcc-14-multilib g++-14-multilib lld
             if [ "${{matrix.architecture}}" = "x86" ]; then
               sudo dpkg --add-architecture i386
             fi
+            sudo apt-get update
             if [ "${{matrix.architecture}}" = "x86" ]; then
-              sudo apt-get install -y gcc-14-multilib g++-14-multilib lld
               sudo apt-get install -y libglu1-mesa-dev:i386
               sudo apt-get install -y libsdl2-dev:i386
               sudo apt-get install -y libdwarf-dev:i386 libelf-dev:i386
