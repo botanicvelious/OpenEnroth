@@ -65,7 +65,7 @@ jobs:
       with:
         key: 'linux-flatpak-${{matrix.configuration}}-${{matrix.architecture}}'
         verbose: 2
-        max-size: 200M
+        max-size: 400M
         save: ${{github.event_name != 'pull_request'}}
         
     - name: Run Flatpak build
