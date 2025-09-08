@@ -73,7 +73,7 @@ jobs:
         with:
           key: 'windows-${{matrix.configuration}}-${{matrix.architecture}}'
           verbose: 2
-          max-size: 200M
+          max-size: 400M
           save: ${{github.event_name != 'pull_request'}}
 
       # MSVC hit rate is higher with ignoring the hash_dir and is safe
