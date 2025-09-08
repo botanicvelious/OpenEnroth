@@ -103,7 +103,7 @@ jobs:
         with:
           key: 'android-${{matrix.configuration}}-universal'
           verbose: 2
-          max-size: 600M
+          max-size: 800M
         if: github.event_name != 'pull_request'
         
       - name: Run ccache pr 
