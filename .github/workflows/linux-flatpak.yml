@@ -87,3 +87,7 @@ jobs:
         prerelease: true
         tag_name: '${{inputs.releaseTag}}'
         files: io.github.openenroth.openenroth_${{inputs.releaseTag}}_${{matrix.configuration}}_${{matrix.architecture}}.flatpak
+
+    - name: Cleanup ccache
+      run: |
+        ccache -c
